@@ -1,0 +1,31 @@
+pythonCHIP And{
+IN a,b;
+OUT out;
+PARTS:
+Nand(a=a,b=b,put=c);
+Nand(a=c,b=c,out=out);
+}
+CHIP Not{
+IN a;
+OUT out;
+PARTS:
+Nand(a=a,b=a,out=out)
+}
+CHIP Or{
+IN a;
+OUT out;
+PARTS:
+Nand(a=a,b=a,put=c)//not a->c
+Nand(a=b,b=b,put=d)//not b->d
+AND(a=c,b=b,put=e)
+AND(a=b,b=d,put=f)
+AND(a=e,b=f.out=out)
+}
+CHIP Xor{
+IN a,b;
+OUT out;
+PARTS:
+NOT(a=a, put=e)//opposite of a
+AND(a=e,b=b,out=out)
+}
+CHIP Mux{
